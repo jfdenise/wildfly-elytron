@@ -121,7 +121,7 @@
         <version.org.aesh>2.7</version.org.aesh>
         <version.org.xnio>3.8.16.Final</version.org.xnio>
         <version.org.openclover>4.5.2</version.org.openclover>
-
+        <version.org.wildfly.graal>1.0-SNAPSHOT</version.org.wildfly.graal>
         <test.level>INFO</test.level>
         <!-- Checkstyle configuration -->
         <linkXRef>false</linkXRef>
@@ -1194,6 +1194,11 @@
                         <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly.graal</groupId>
+                <artifactId>wildfly-graal-runtime</artifactId>
+                <version>${version.org.wildfly.graal}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

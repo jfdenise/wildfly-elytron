@@ -33,7 +33,11 @@
     <description>WildFly Security Base</description>
 
     <dependencies>
-        <dependency>
+      <dependency>
+        <groupId>org.wildfly.graal</groupId>
+        <artifactId>wildfly-graal-runtime</artifactId>
+      </dependency>
+      <dependency>
             <groupId>org.wildfly.common</groupId>
             <artifactId>wildfly-common</artifactId>
             <!-- scope is compile ELY-1153 -->
