@@ -24,7 +24,6 @@ import javax.xml.stream.XMLStreamReader;
 
 import org.jboss.logging.annotations.Param;
 import org.jboss.modules.Module;
-import org.jboss.modules.ModuleIdentifier;
 import org.jboss.modules.ModuleLoadException;
 import org.wildfly.client.config.ConfigXMLParseException;
 
@@ -47,11 +46,10 @@ class ModuleLoader {
      *
      */
     static ClassLoader getClassLoaderFromModule(@Param XMLStreamReader reader, String moduleName) throws ConfigXMLParseException {
-        final ModuleIdentifier identifier = ModuleIdentifier.fromString(moduleName);
         try {
-            return Module.getModuleFromCallerModuleLoader(identifier).getClassLoader();
+            return Module.getModuleFromCallerModuleLoader(moduleName).getClassLoader();
         } catch (ModuleLoadException e) {
-            throw xmlLog.xmlNoModuleFound(reader, e, identifier.toString());
+            throw xmlLog.xmlNoModuleFound(reader, e, moduleName);
         }
     }
 }
