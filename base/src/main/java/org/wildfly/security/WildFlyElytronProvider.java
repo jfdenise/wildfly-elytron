@@ -368,7 +368,6 @@ public class WildFlyElytronProvider extends VersionedProvider {
             Constructor ctr = null;
             if (loader instanceof ModuleClassLoader && Boolean.getBoolean("org.wildfly.graal")) {
                 ModuleClassLoader mc = (ModuleClassLoader) loader;
-                System.out.println("Retrieve service from cache " + getClassName() + " In module " + mc.getModule().getName());
                 Class[] params = null;
                 if (constructorParameter != null) {
                     params = new Class[1];
