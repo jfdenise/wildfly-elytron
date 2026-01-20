@@ -279,7 +279,7 @@ public class WildFlyElytronProvider extends VersionedProvider {
             this.reUsable = reUsable;
             if(Boolean.getBoolean("org.wildfly.graal.build.time")) {
                 // Register the constructor
-                ModuleClassLoader mcl = (ModuleClassLoader) Thread.currentThread().getContextClassLoader();
+                ModuleClassLoader mcl = (ModuleClassLoader) WildFlyElytronProvider.class.getClassLoader();
                 try {
                     mcl.getModule().getCache().addClassToCache(className);
                 } catch (Exception ex) {
@@ -353,7 +353,12 @@ public class WildFlyElytronProvider extends VersionedProvider {
             if (implementationClass == null) {
                 ClassLoader classLoader = WildFlyElytronProvider.class.getClassLoader();
                 try {
-                    implementationClass = Class.forName(getClassName(), false, classLoader);
+                    if (classLoader instanceof ModuleClassLoader && Boolean.getBoolean("org.wildfly.graal")) {
+                        ModuleClassLoader mc = (ModuleClassLoader) classLoader;
+                        implementationClass = mc.getModule().getCache().getClassFromCache(getClassName());
+                    } else {
+                        implementationClass = Class.forName(getClassName(), false, classLoader);
+                    }
                 } catch (ClassNotFoundException e) {
                     throw log.noSuchAlgorithmCreateService(getType(), getAlgorithm(), e);
                 }
@@ -373,7 +378,7 @@ public class WildFlyElytronProvider extends VersionedProvider {
                     params = new Class[1];
                     params[0] = constructorParameter.getClass();
                 }
-                ctr = mc.getModule().getCache().getConstructorFromCache(getClassName(), params);
+                ctr = mc.getModule().getCache().getConstructorFromCache(getImplementationClass(), params);
             }
             return ctr;
         }
